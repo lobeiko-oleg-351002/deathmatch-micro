@@ -4,7 +4,7 @@ public interface IRepository<TEntity>
     where TEntity : BaseEntity
 
 {
-    Task Create(TEntity entity);
+    Task<TEntity> Create(TEntity entity);
 
     IQueryable<TEntity> GetAll();
 

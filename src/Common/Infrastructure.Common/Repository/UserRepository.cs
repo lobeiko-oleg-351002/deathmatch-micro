@@ -56,7 +56,7 @@ public class UserRepository : Repository<User>, IUserRepository
         throw ex;
     }
 
-    public override async Task Create(User entity)
+    public override async Task<User> Create(User entity)
     {
         try
         {
@@ -65,6 +65,7 @@ public class UserRepository : Repository<User>, IUserRepository
             entity.Role = await _context.Roles.FirstOrDefaultAsync(role => role.Id == entity.Role.Id);
             var result = await _context.Set<User>().AddAsync(entity);
             await _context.SaveChangesAsync();
+            return result.Entity;
         }
         catch (Exception ex)
         {

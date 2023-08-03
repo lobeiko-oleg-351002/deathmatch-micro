@@ -6,5 +6,5 @@ namespace deathmatch_micro.Domain;
 public abstract class BaseEntity
 {
     [Key, Required]
-    public required Guid Id { get; set; }
+    public Guid Id { get; set; }
 }

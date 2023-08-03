@@ -12,7 +12,7 @@ public class UserMapperProfile : Profile
     {
         CreateMap<User, ViewUserDTO>();
         CreateMap<CreateUserDTO, User>();
-        CreateMap<CreateUserCommand, CreateUserDTO>();
+        CreateMap<CreateUserCommand, CreateUserDTO>().ForMember(x => x.Id, opt => opt.Ignore());
         CreateMap<ViewRoleDTO, Role>().ReverseMap();
     }
 }

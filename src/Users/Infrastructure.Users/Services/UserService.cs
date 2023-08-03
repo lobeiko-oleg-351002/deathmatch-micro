@@ -32,10 +32,10 @@ public class UserService : Service<User, ViewUserDTO, CreateUserDTO>, IUserServi
         }
     }
 
-    public override async Task Create(CreateUserDTO entity)
+    public override async Task<ViewUserDTO> Create(CreateUserDTO entity)
     {
         _userValidationService.ValidateNewUser(_mapper.Map<CreateUserDTO>(entity));
-        await base.Create(entity);
+        return await base.Create(entity);
     }
 
     public override async Task Update(CreateUserDTO entity)

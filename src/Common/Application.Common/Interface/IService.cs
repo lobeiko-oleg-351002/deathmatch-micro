@@ -6,7 +6,7 @@ public interface IService<TEntity, UEntity>
     where TEntity : ViewDTO
     where UEntity : CreateDTO
 {
-    Task Create(UEntity entity);
+    Task<TEntity> Create(UEntity entity);
 
     Task<List<TEntity>> GetAll();
 

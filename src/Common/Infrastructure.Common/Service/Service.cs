@@ -20,9 +20,9 @@ public class Service<TEntity, UEntity, YEntity> : IService<UEntity, YEntity>
         _mapper = mapper;
     }
 
-    public virtual async Task Create(YEntity entity)
+    public virtual async Task<UEntity> Create(YEntity entity)
     {
-        await _repository.Create(_mapper.Map<TEntity>(entity));
+        return _mapper.Map<UEntity>(await _repository.Create(_mapper.Map<TEntity>(entity)));
     }
 
     public virtual async Task Delete(Guid id)

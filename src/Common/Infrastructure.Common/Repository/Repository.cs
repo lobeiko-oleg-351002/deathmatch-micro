@@ -18,7 +18,7 @@ public class Repository<TEntity> : IRepository<TEntity>
         _logMessageManager = logMessageManager;
     }
 
-    public virtual async Task Create(TEntity entity)
+    public virtual async Task<TEntity> Create(TEntity entity)
     {
         try
         {
@@ -27,6 +27,7 @@ public class Repository<TEntity> : IRepository<TEntity>
             var result = await _context.Set<TEntity>().AddAsync(entity);
             await _context.SaveChangesAsync();
             _logMessageManager.LogSuccess();
+            return result.Entity;
         }
         catch (Exception ex)
         {
