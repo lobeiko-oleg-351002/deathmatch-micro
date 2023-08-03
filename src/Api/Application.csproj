@@ -21,13 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application.Users\Application.Users.csproj" />
-    <ProjectReference Include="..\Infrastructure.Common\Infrastructure.Common.csproj" />
-    <ProjectReference Include="..\Infrastructure.Users\Infrastructure.Users.csproj" />
+    <Folder Include="ClientApp\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\" />
+    <ProjectReference Include="..\Common\Infrastructure.Common\Infrastructure.Common.csproj" />
+    <ProjectReference Include="..\Users\Application.Users\Application.Users.csproj" />
+    <ProjectReference Include="..\Users\Infrastructure.Users\Infrastructure.Users.csproj" />
   </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
