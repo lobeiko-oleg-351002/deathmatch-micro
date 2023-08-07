@@ -19,7 +19,7 @@ public class UserServiceUnitTest
     [Fact]
     public async void UserService_Create_Success()
     {
-        var createDTO = new CreateUserDTO() { Id = new Guid(), Email = "totalit@gmail.com", Name = "totalit", Password = "123", Role = new ViewRoleDTO { Name = "User" } };
+        var createDTO = new CreateUserDTO() { Id = "13d54b8e-2c1f-4e35-49fb-08db94cbee6d", Email = "totalit@gmail.com", Name = "totalit", Password = "123", Role = new ViewRoleDTO { Id = "65fd2816-d5ed-467b-d4b1-08db97217cbd", Name = "User" } };
         var expected = new ViewUserDTO() { Id = createDTO.Id, Name = createDTO.Name, Role = createDTO.Role };
 
         var entity = _mapper.Map<User>(createDTO);
@@ -38,7 +38,7 @@ public class UserServiceUnitTest
     [Fact]
     public void UserService_Create_FailedWhenRepositoryReturnsNull()
     {
-        var createDTO = new CreateUserDTO() { Id = new Guid(), Email = "totalit@gmail.com", Name = "totalit", Password = "123", Role = new ViewRoleDTO { Name = "User" } };
+        var createDTO = new CreateUserDTO() { Id = "13d54b8e-2c1f-4e35-49fb-08db94cbee6d", Email = "totalit@gmail.com", Name = "totalit", Password = "123", Role = new ViewRoleDTO { Id = "65fd2816-d5ed-467b-d4b1-08db97217cbd", Name = "User" } };
 
         User entity = null;
 

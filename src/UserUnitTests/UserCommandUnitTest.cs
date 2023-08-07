@@ -24,7 +24,7 @@ public class UserCommandUnitTest
     [Fact]
     public void CreateUserCommand_Success()
     {
-        var cmd = new CreateUserCommand { Name = "commandUser", Password = "1234", Email = "test@test.com", Role = new ViewRoleDTO { Name = "User"} };
+        var cmd = new CreateUserCommand { Name = "commandUser", Password = "1234", Email = "test@test.com", Role = new ViewRoleDTO { Id = "", Name = "User"} };
         var handler = new CreateUserCommandHandler(_mockUserService.Object, _mapper);
 
         var result = handler.Handle(cmd, new CancellationToken());
@@ -36,7 +36,7 @@ public class UserCommandUnitTest
     [Fact]
     public void RemoveUserCommand_Success()
     {
-        var cmd = new RemoveUserByIdCommand(new Guid());
+        var cmd = new RemoveUserByIdCommand { Id = "" };
         var handler = new RemoveUserCommandHandler(_mockUserService.Object);
 
         var result = handler.Handle(cmd, new CancellationToken());

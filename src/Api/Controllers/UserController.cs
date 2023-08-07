@@ -23,6 +23,12 @@ public class UserController : ControllerBase
         await _mediator.Send(cmd);
     }
 
+    [HttpDelete]
+    public async Task DeleteUser(RemoveUserByIdCommand cmd)
+    {
+        await _mediator.Send(cmd);
+    }
+
     //  [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<IActionResult> GetAll()

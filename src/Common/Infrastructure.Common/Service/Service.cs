@@ -25,9 +25,9 @@ public class Service<TEntity, UEntity, YEntity> : IService<UEntity, YEntity>
         return _mapper.Map<UEntity>(await _repository.Create(_mapper.Map<TEntity>(entity)));
     }
 
-    public virtual async Task Delete(Guid id)
+    public virtual async Task Delete(string id)
     {
-        await _repository.Delete(id);
+        await _repository.Delete(Guid.Parse(id));
     }
 
     public virtual async Task<List<UEntity>> GetAll()
@@ -37,9 +37,9 @@ public class Service<TEntity, UEntity, YEntity> : IService<UEntity, YEntity>
         return entities.Select(_mapper.Map<UEntity>).ToList();
     }
 
-    public virtual async Task<UEntity> Get(Guid id)
+    public virtual async Task<UEntity> Get(string id)
     {
-        var entity = await _repository.Get(id);
+        var entity = await _repository.Get(Guid.Parse(id));
         return _mapper.Map<UEntity>(entity);
     }
 

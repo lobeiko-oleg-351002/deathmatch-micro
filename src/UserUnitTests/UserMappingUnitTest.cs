@@ -31,8 +31,8 @@ public class UserMappingUnitTest
         {
             return new[]
             {
-                new object[] { new CreateUserDTO { Id = new Guid(), Email = "totalit@gmail.com", Name = "totalit", Password = "123", Role = new ViewRoleDTO() { Name = "User" } } },
-                new object[] { new CreateUserDTO { Id = new Guid(), Email = string.Empty, Name = "totalit", Password = "123", Role = new ViewRoleDTO() { Name = "User" } } }
+                new object[] { new CreateUserDTO { Id = "65fd2816-d5ed-467b-d4b1-08db97217cbd", Email = "totalit@gmail.com", Name = "totalit", Password = "123", Role = new ViewRoleDTO() { Id = "65fd2816-d5ed-467b-d4b1-08db97217cbd", Name = "User" } } },
+                new object[] { new CreateUserDTO { Id = "65fd2816-d5ed-467b-d4b1-08db97217cbd", Email = string.Empty, Name = "totalit", Password = "123", Role = new ViewRoleDTO() { Id = "65fd2816-d5ed-467b-d4b1-08db97217cbd", Name = "User" } } }
                 };
         }
     }
@@ -47,7 +47,7 @@ public class UserMappingUnitTest
     [Theory, MemberData(nameof(UserEntitiesComplete))]
     public void UserMapper_ConvertToViewDTO_SuccessFieldConverting(User entity)
     {
-        var expected = new ViewUserDTO { Id = entity.Id, Name = entity.Name, Role = _mapper.Map <ViewRoleDTO>(entity.Role) };
+        var expected = new ViewUserDTO { Id = entity.Id.ToString(), Name = entity.Name, Role = _mapper.Map <ViewRoleDTO>(entity.Role) };
         var actual = _mapper.Map<ViewUserDTO>(entity);
 
         Assert.Equal(expected.Role.Name, actual.Role.Name);
@@ -58,7 +58,7 @@ public class UserMappingUnitTest
     [Theory, MemberData(nameof(UserCreateDTOsComplete))]
     public void UserMapper_ConvertToEntity_SuccessFieldConverting(CreateUserDTO createDTO)
     {
-        var expected = new User { Id = createDTO.Id, Name = createDTO.Name, Role = _mapper.Map<Role>(createDTO.Role), Email = createDTO.Email, Password = createDTO.Password };
+        var expected = new User { Id = Guid.Parse(createDTO.Id), Name = createDTO.Name, Role = _mapper.Map<Role>(createDTO.Role), Email = createDTO.Email, Password = createDTO.Password };
         var actual = _mapper.Map<User>(createDTO);
 
         Assert.Equal(expected.Role.Name, actual.Role.Name);

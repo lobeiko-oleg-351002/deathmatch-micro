@@ -15,9 +15,9 @@ public class UserValidationServiceUnitTest
         {
             return new[]
             {
-                    new object[] { new CreateUserDTO { Id = new Guid(), Email = "a", Name = "totalit", Password = "123", Role = new ViewRoleDTO() { Name = "User" } } },
-                    new object[] { new CreateUserDTO { Id = new Guid(), Email = string.Empty, Name = "totalit", Password = "123", Role = new ViewRoleDTO() { Name = "User" } } },
-                    new object[] { new CreateUserDTO { Id = new Guid(), Email = "123", Name = "totalit", Password = "123", Role = new ViewRoleDTO() { Name = "User" } } },
+                    new object[] { new CreateUserDTO { Id = "", Email = "a", Name = "totalit", Password = "123", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
+                    new object[] { new CreateUserDTO { Id = "", Email = string.Empty, Name = "totalit", Password = "123", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
+                    new object[] { new CreateUserDTO { Id = "", Email = "123", Name = "totalit", Password = "123", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
                  };
         }
     }
@@ -28,7 +28,7 @@ public class UserValidationServiceUnitTest
         {
             return new[]
             {
-                    new object[] { new CreateUserDTO { Id = new Guid(), Email = "totalit@gmail.com", Name = "totalit", Password = "123", Role = null } },
+                    new object[] { new CreateUserDTO { Id = "", Email = "totalit@gmail.com", Name = "totalit", Password = "123", Role = null } },
                 };
         }
     }
@@ -39,8 +39,8 @@ public class UserValidationServiceUnitTest
         {
             return new[]
             {
-                    new object[] { new CreateUserDTO { Id = new Guid(), Email = "totalit@gmail.com", Name = string.Empty, Password = "123", Role = new ViewRoleDTO() { Name = "User" } } },
-                    new object[] { new CreateUserDTO { Id = new Guid(), Email = "totalit@gmail.com", Name = "a", Password = "123", Role = new ViewRoleDTO() { Name = "User" } } },
+                    new object[] { new CreateUserDTO { Id = "", Email = "totalit@gmail.com", Name = string.Empty, Password = "123", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
+                    new object[] { new CreateUserDTO { Id = "", Email = "totalit@gmail.com", Name = "a", Password = "123", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
                 };
         }
     }
@@ -51,8 +51,8 @@ public class UserValidationServiceUnitTest
         {
             return new[]
             {
-                    new object[] { new CreateUserDTO { Id = new Guid(), Email = "totalit@gmail.com", Name = "totalit", Password = string.Empty, Role = new ViewRoleDTO() { Name = "User" } } },
-                    new object[] { new CreateUserDTO { Id = new Guid(), Email = "totalit@gmail.com", Name = "totalit", Password = "12", Role = new ViewRoleDTO() { Name = "User" } } },
+                    new object[] { new CreateUserDTO { Id = "", Email = "totalit@gmail.com", Name = "totalit", Password = string.Empty, Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
+                    new object[] { new CreateUserDTO { Id = "", Email = "totalit@gmail.com", Name = "totalit", Password = "12", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
                 };
         }
     }
@@ -63,8 +63,8 @@ public class UserValidationServiceUnitTest
         {
             return new[]
             {
-                    new object[] { new CreateUserDTO { Id = new Guid(), Email = "totalit@gmail.com", Name = "tot", Password = "123", Role = new ViewRoleDTO() { Name = "User" } } },
-                    new object[] { new CreateUserDTO { Id = new Guid(), Email = "totalit@gmail.com", Name = "totalit", Password = "asdfasdf", Role = new ViewRoleDTO() { Name = "User" } } },
+                    new object[] { new CreateUserDTO { Id = "", Email = "totalit@gmail.com", Name = "tot", Password = "123", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
+                    new object[] { new CreateUserDTO { Id = "", Email = "totalit@gmail.com", Name = "totalit", Password = "asdfasdf", Role = new ViewRoleDTO() {Id = "", Name = "User" } } },
                  };
         }
     }

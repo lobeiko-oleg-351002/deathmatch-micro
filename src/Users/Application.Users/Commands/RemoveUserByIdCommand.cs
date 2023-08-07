@@ -4,12 +4,7 @@ using MediatR;
 namespace deathmatch_micro.Application.Users.Commands;
 public record RemoveUserByIdCommand : IRequest<Unit>
 {
-    public readonly Guid Id;
-
-    public RemoveUserByIdCommand(Guid id)
-    {
-        Id = id;
-    }
+    public required string Id { get; set; }
 }
 
 public class RemoveUserCommandHandler : IRequestHandler<RemoveUserByIdCommand, Unit>

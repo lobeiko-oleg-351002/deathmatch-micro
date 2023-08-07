@@ -8,5 +8,5 @@ namespace Application.Common.DTO;
 
 public abstract record CreateDTO
 {
-    public Guid Id { get; set; }
+    public required string Id { get; set; }
 }
