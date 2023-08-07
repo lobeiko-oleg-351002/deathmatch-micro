@@ -12,6 +12,7 @@ services.RegisterInfrastructureDependencies();
 services.RegisterUserDependencies();
 services.RegisterUserHandlers();
 
+
 services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 services.AddSwaggerGen();
