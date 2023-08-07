@@ -30,7 +30,7 @@ public class UserServiceUnitTest
 
         IUserValidationService userValidationService = new UserValidationService();
 
-        IUserService service = new UserService(mockRepository.Object, userValidationService, _mapper);
+        IUserService service = new UserService(mockRepository.Object, _mapper);
         var actual = await service.Create(createDTO);
         Assert.Equal(expected, actual);
     }
@@ -48,7 +48,7 @@ public class UserServiceUnitTest
 
         IUserValidationService userValidationService = new UserValidationService();
 
-        IUserService service = new UserService(mockRepository.Object, userValidationService, _mapper);
+        IUserService service = new UserService(mockRepository.Object, _mapper);
         Assert.ThrowsAsync<ArgumentNullException>(() => service.Create(createDTO));
     }
 }

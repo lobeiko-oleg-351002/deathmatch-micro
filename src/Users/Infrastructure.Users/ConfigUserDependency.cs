@@ -15,7 +15,6 @@ public static class ConfigUserDependency
     {
         services.AddScoped<ILogMessageManager<User>, LogMessageManager<User>>();
         services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IUserValidationService, UserValidationService>();
         services.AddScoped<IUserService, UserService>();
 
         services.AddScoped<ILogMessageManager<Role>, LogMessageManager<Role>>();

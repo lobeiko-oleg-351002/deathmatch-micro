@@ -7,6 +7,13 @@ public sealed class RemoveUserByIdCommandValidator : AbstractValidator<RemoveUse
 {
     public RemoveUserByIdCommandValidator()
     {
-        RuleFor(x => x.Id).NotEmpty();
+        RuleFor(x => x.Id).NotEmpty().Must(ValidateGuid);
+    }
+
+    private bool ValidateGuid(string id)
+    {
+        Guid result;
+        return Guid.TryParse(id, out result); ;
+
     }
 }

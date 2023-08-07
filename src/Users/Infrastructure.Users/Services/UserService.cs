@@ -11,16 +11,13 @@ namespace Infrastructure.Users.Services;
 
 public class UserService : Service<User, ViewUserDTO, CreateUserDTO>, IUserService
 {
-    private readonly IUserValidationService _userValidationService;
-    public UserService(IUserRepository UserRepository, IUserValidationService userValidationService, IMapper mapper)
+    public UserService(IUserRepository UserRepository, IMapper mapper)
         : base(UserRepository, mapper)
     {
-        _userValidationService = userValidationService;
     }
 
     public async Task<ViewUserDTO> GetByNameAndPassword(string name, string password)
     {
-        _userValidationService.ValidateNameAndPassword(name, password);
         try
         {
             var entity = await ((IUserRepository)_repository).GetByNameAndPassword(name, password);
@@ -34,13 +31,11 @@ public class UserService : Service<User, ViewUserDTO, CreateUserDTO>, IUserServi
 
     public override async Task<ViewUserDTO> Create(CreateUserDTO entity)
     {
-        _userValidationService.ValidateNewUser(_mapper.Map<CreateUserDTO>(entity));
         return await base.Create(entity);
     }
 
     public override async Task Update(CreateUserDTO entity)
     {
-        _userValidationService.ValidateNewUser(_mapper.Map<CreateUserDTO>(entity));
         await base.Update(entity);
     }
 }
