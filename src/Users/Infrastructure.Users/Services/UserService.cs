@@ -11,9 +11,11 @@ namespace Infrastructure.Users.Services;
 
 public class UserService : Service<User, ViewUserDTO, CreateUserDTO>, IUserService
 {
-    public UserService(IUserRepository UserRepository, IMapper mapper)
+    private readonly IRoleRepository _roleRepository;
+    public UserService(IUserRepository UserRepository, IRoleRepository roleRepository, IMapper mapper)
         : base(UserRepository, mapper)
     {
+        _roleRepository = roleRepository;
     }
 
     public async Task<ViewUserDTO> GetByNameAndPassword(string name, string password)
@@ -29,9 +31,12 @@ public class UserService : Service<User, ViewUserDTO, CreateUserDTO>, IUserServi
         }
     }
 
-    public override async Task<ViewUserDTO> Create(CreateUserDTO entity)
+    public override async Task<ViewUserDTO> Create(CreateUserDTO dto)
     {
-        return await base.Create(entity);
+        User entity = _mapper.Map<User>(dto);
+        entity.Role = await _roleRepository.GetByName(dto.RoleName);
+        var newUser = await _repository.Create(entity);
+        return _mapper.Map<ViewUserDTO>(newUser);
     }
 
     public override async Task Update(CreateUserDTO entity)

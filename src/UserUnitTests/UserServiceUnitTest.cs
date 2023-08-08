@@ -19,36 +19,38 @@ public class UserServiceUnitTest
     [Fact]
     public async void UserService_Create_Success()
     {
-        var createDTO = new CreateUserDTO() { Id = "13d54b8e-2c1f-4e35-49fb-08db94cbee6d", Email = "totalit@gmail.com", Name = "totalit", Password = "123", Role = new ViewRoleDTO { Id = "65fd2816-d5ed-467b-d4b1-08db97217cbd", Name = "User" } };
-        var expected = new ViewUserDTO() { Id = createDTO.Id, Name = createDTO.Name, Role = createDTO.Role };
+        var createDTO = new CreateUserDTO() { Id = "13d54b8e-2c1f-4e35-49fb-08db94cbee6d", Email = "totalit@gmail.com", Name = "totalit", Password = "123", RoleName = "User" };
+        var expected = new ViewUserDTO() { Id = createDTO.Id, Name = createDTO.Name, Role = new ViewRoleDTO { Id = "13ad6213-7ed2-4fc0-9db6-900d462f2229", Name = "User" } };
 
         var entity = _mapper.Map<User>(createDTO);
 
-        var mockRepository = new Mock<IUserRepository>();
-        mockRepository.Setup(repository => repository.Create(It.Is<User>(User => User.Name == entity.Name)).Result).Returns(entity);
+        var mockRoleRepository = new Mock<IRoleRepository>();
+        mockRoleRepository.Setup(repository => repository.GetByName(It.IsAny<string>()).Result).Returns(new Role { Name = "User", Id = Guid.Parse("13ad6213-7ed2-4fc0-9db6-900d462f2229") });
+        var mockUserRepository = new Mock<IUserRepository>();
+        entity.Role.Id = Guid.Parse("13ad6213-7ed2-4fc0-9db6-900d462f2229");
+        mockUserRepository.Setup(repository => repository.Create(It.Is<User>(User => User.Name == entity.Name)).Result).Returns(entity);
 
 
-        IUserValidationService userValidationService = new UserValidationService();
-
-        IUserService service = new UserService(mockRepository.Object, _mapper);
+        IUserService service = new UserService(mockUserRepository.Object, mockRoleRepository.Object, _mapper);
         var actual = await service.Create(createDTO);
         Assert.Equal(expected, actual);
+        mockRoleRepository.Verify(mock => mock.GetByName("User"));
     }
 
     [Fact]
     public void UserService_Create_FailedWhenRepositoryReturnsNull()
     {
-        var createDTO = new CreateUserDTO() { Id = "13d54b8e-2c1f-4e35-49fb-08db94cbee6d", Email = "totalit@gmail.com", Name = "totalit", Password = "123", Role = new ViewRoleDTO { Id = "65fd2816-d5ed-467b-d4b1-08db97217cbd", Name = "User" } };
+        var createDTO = new CreateUserDTO() { Id = "13d54b8e-2c1f-4e35-49fb-08db94cbee6d", Email = "totalit@gmail.com", Name = "totalit", Password = "123", RoleName = "User" };
 
         User entity = null;
 
-        var mockRepository = new Mock<IUserRepository>();
-        mockRepository.Setup(repository => repository.Create(_mapper.Map<User>(createDTO)).Result).Returns(entity);
+        var mockRoleRepository = new Mock<IRoleRepository>();
+        mockRoleRepository.Setup(repository => repository.Get(It.IsAny<Guid>()).Result).Returns(new Role { Name = "User", Id = Guid.Parse("13ad6213-7ed2-4fc0-9db6-900d462f2229") });
+        var mockUserRepository = new Mock<IUserRepository>();
+        mockUserRepository.Setup(repository => repository.Create(_mapper.Map<User>(createDTO)).Result).Returns(entity);
 
 
-        IUserValidationService userValidationService = new UserValidationService();
-
-        IUserService service = new UserService(mockRepository.Object, _mapper);
+        IUserService service = new UserService(mockUserRepository.Object, mockRoleRepository.Object, _mapper);
         Assert.ThrowsAsync<ArgumentNullException>(() => service.Create(createDTO));
     }
 }

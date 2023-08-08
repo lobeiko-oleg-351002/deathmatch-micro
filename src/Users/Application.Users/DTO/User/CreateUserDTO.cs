@@ -11,5 +11,5 @@ public record CreateUserDTO : CreateDTO
 
     public required string Password { get; set; }
 
-    public required ViewRoleDTO Role { get; set; }
+    public required string RoleName { get; set; }
 }

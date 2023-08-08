@@ -25,9 +25,9 @@ public class UserFluentValidationUnitTest
         {
             return new[]
             {
-                    new object[] { new CreateUserCommand { Email = "a", Name = "totalit", Password = "123", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
-                    new object[] { new CreateUserCommand { Email = string.Empty, Name = "totalit", Password = "123", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
-                    new object[] { new CreateUserCommand { Email = "123", Name = "totalit", Password = "123", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
+                    new object[] { new CreateUserCommand { Email = "a", Name = "totalit", Password = "123", RoleName = "User" } },
+                    new object[] { new CreateUserCommand { Email = string.Empty, Name = "totalit", Password = "123", RoleName = "User" } },
+                    new object[] { new CreateUserCommand { Email = "123", Name = "totalit", Password = "123", RoleName = "User" } },
                  };
         }
     }
@@ -38,7 +38,7 @@ public class UserFluentValidationUnitTest
         {
             return new[]
             {
-                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = "totalit", Password = "123", Role = null } },
+                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = "totalit", Password = "123", RoleName = String.Empty } },
                 };
         }
     }
@@ -49,8 +49,8 @@ public class UserFluentValidationUnitTest
         {
             return new[]
             {
-                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = string.Empty, Password = "123", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
-                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = "a", Password = "123", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
+                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = string.Empty, Password = "123", RoleName = "User" } },
+                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = "a", Password = "123", RoleName = "User" } },
                 };
         }
     }
@@ -61,8 +61,8 @@ public class UserFluentValidationUnitTest
         {
             return new[]
             {
-                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = "totalit", Password = string.Empty, Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
-                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = "totalit", Password = "12", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
+                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = "totalit", Password = string.Empty, RoleName = "User" } },
+                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = "totalit", Password = "12", RoleName = "User" } },
                 };
         }
     }
@@ -73,8 +73,8 @@ public class UserFluentValidationUnitTest
         {
             return new[]
             {
-                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = "tot", Password = "123", Role = new ViewRoleDTO() { Id = "", Name = "User" } } },
-                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = "totalit", Password = "asdfasdf", Role = new ViewRoleDTO() {Id = "", Name = "User" } } },
+                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = "tot", Password = "123", RoleName = "User" } },
+                    new object[] { new CreateUserCommand { Email = "totalit@gmail.com", Name = "totalit", Password = "asdfasdf", RoleName = "User" } },
                  };
         }
     }
@@ -105,7 +105,7 @@ public class UserFluentValidationUnitTest
     public void CreateUserCommand_ValidateNewUser_RoleIsNullException(CreateUserCommand entity)
     {
         var response = _createUserCommandValidator.TestValidate(entity);
-        response.ShouldHaveValidationErrorFor(x => x.Role);
+        response.ShouldHaveValidationErrorFor(x => x.RoleName);
     }
 
     [Theory, MemberData(nameof(UserEntitiesValid))]

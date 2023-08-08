@@ -13,7 +13,7 @@ public record CreateUserCommand : IRequest<Unit>
 
     public required string Password { get; set; }
 
-    public required ViewRoleDTO Role { get; set; }
+    public required string RoleName { get; set; }
 }
 
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Unit>

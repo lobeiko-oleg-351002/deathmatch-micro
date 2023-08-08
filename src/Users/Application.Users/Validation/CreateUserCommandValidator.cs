@@ -8,7 +8,7 @@ public sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCom
     private const int MinFieldLength = 3;
     public CreateUserCommandValidator()
     {
-        RuleFor(x => x.Role).NotEmpty();
+        RuleFor(x => x.RoleName).NotEmpty();
         RuleFor(x => x.Name).NotEmpty().MinimumLength(MinFieldLength);
         RuleFor(x => x.Password).NotEmpty().MinimumLength(MinFieldLength);
         RuleFor(x => x.Email).NotEmpty().Must(IsEmailValid).WithMessage("Invalid email");

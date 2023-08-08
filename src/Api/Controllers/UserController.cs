@@ -18,7 +18,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task CreateUser(CreateUserCommand cmd)
+    public async Task CreateUser([FromForm] CreateUserCommand cmd)
     {
         await _mediator.Send(cmd);
     }

@@ -8,6 +8,8 @@ public class RoleMapperProfile : Profile
 {
     public RoleMapperProfile()
     {
-        CreateMap<Role, ViewRoleDTO>().ForMember(dto => dto.Id, entity => entity.MapFrom(x => x.Id.ToString())); ;
+        CreateMap<Role, ViewRoleDTO>()
+            .ForMember(dto => dto.Id, entity => entity.MapFrom(x => x.Id.ToString()))
+            .ForMember(dto => dto.Name, entity => entity.MapFrom(x => x.Name));
     }
 }
