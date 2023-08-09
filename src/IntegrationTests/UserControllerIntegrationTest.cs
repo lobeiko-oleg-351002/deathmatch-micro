@@ -1,5 +1,8 @@
 using Application.Users.DTO.Role;
+using Azure;
 using deathmatch_micro.Application.Users.Commands;
+using deathmatch_micro.Domain.Entities;
+using Infrastructure.Common.Exceptions;
 using Newtonsoft.Json;
 
 namespace IntegrationTests;
@@ -20,7 +23,7 @@ public class UserControllerIntegrationTest : IClassFixture<TestingWebAppFactory<
         Assert.Contains("Evelin", responseString);
     }
 
-    public static IEnumerable<object[]> UserEntitiesEmptyOrIncorrectEmail
+    public static IEnumerable<object[]> UserCorrectEntities
     {
         get
         {
@@ -31,7 +34,19 @@ public class UserControllerIntegrationTest : IClassFixture<TestingWebAppFactory<
         }
     }
 
-    [Theory, MemberData(nameof(UserEntitiesEmptyOrIncorrectEmail))]
+    public static IEnumerable<object[]> UserEntitiesIncorrectRole
+    {
+        get
+        {
+            return new[]
+            {
+                new object[] { new CreateUserCommand { Email = "totalit2803@gmail.com", Name = "totalit", Password = "123", RoleName = "NotUser" } },
+                new object[] { new CreateUserCommand { Email = "totalit2803@gmail.com", Name = "totalit", Password = "123", RoleName = "ff" } },
+            };
+        }
+    }
+
+    [Theory, MemberData(nameof(UserCorrectEntities))]
     public async Task CreateUser_Success(CreateUserCommand cmd)
     {
         var postRequest = new HttpRequestMessage(HttpMethod.Post, "/User/CreateUser");
@@ -43,6 +58,22 @@ public class UserControllerIntegrationTest : IClassFixture<TestingWebAppFactory<
         var response = await _client.SendAsync(postRequest);
 
         response.EnsureSuccessStatusCode();
+    }
+
+    [Theory, MemberData(nameof(UserEntitiesIncorrectRole))]
+    public async Task CreateUser_IncorrectRole(CreateUserCommand cmd)
+    {
+        var postRequest = new HttpRequestMessage(HttpMethod.Post, "/User/CreateUser");
+
+        var cmdDictionary = ToDictionary<string>(cmd);
+
+        postRequest.Content = new FormUrlEncodedContent(cmdDictionary);
+
+        var response = await _client.SendAsync(postRequest);
+
+        var responseString = await response.Content.ReadAsStringAsync();
+
+        Assert.Contains("ItemNotFoundException", responseString);      
     }
 
     private static Dictionary<string, TValue> ToDictionary<TValue>(object obj)
