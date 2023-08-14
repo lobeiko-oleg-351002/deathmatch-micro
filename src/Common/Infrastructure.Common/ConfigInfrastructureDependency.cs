@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using deathmatch_micro.Domain.Entities;
-using deathmatch_micro.Domain.Interfaces;
-using deathmatch_micro.Infrastructure.Common;
-using Infrastructure.Common.Logging;
-using Infrastructure.Common.Repository;
+﻿using deathmatch_micro.Infrastructure.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
