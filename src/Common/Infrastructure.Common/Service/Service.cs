@@ -9,8 +9,8 @@ namespace Infrastructure.Common.Service;
 
 public class Service<TEntity, UEntity, YEntity> : IService<UEntity, YEntity>
      where TEntity : BaseEntity
-     where UEntity : ViewDTO
-     where YEntity : CreateDTO
+     where UEntity : ResponseDTO
+     where YEntity : RequestDTO
 {
     protected readonly IRepository<TEntity> _repository;
     protected readonly IMapper _mapper;
@@ -25,9 +25,9 @@ public class Service<TEntity, UEntity, YEntity> : IService<UEntity, YEntity>
         return _mapper.Map<UEntity>(await _repository.Create(_mapper.Map<TEntity>(entity)));
     }
 
-    public virtual async Task Delete(string id)
+    public virtual async Task Delete(Guid id)
     {
-        await _repository.Delete(Guid.Parse(id));
+        await _repository.Delete(id);
     }
 
     public virtual async Task<List<UEntity>> GetAll()
@@ -37,9 +37,9 @@ public class Service<TEntity, UEntity, YEntity> : IService<UEntity, YEntity>
         return entities.Select(_mapper.Map<UEntity>).ToList();
     }
 
-    public virtual async Task<UEntity> Get(string id)
+    public virtual async Task<UEntity> Get(Guid id)
     {
-        var entity = await _repository.Get(Guid.Parse(id));
+        var entity = await _repository.Get(id);
         return _mapper.Map<UEntity>(entity);
     }
 
@@ -48,7 +48,7 @@ public class Service<TEntity, UEntity, YEntity> : IService<UEntity, YEntity>
         await _repository.Update(_mapper.Map<TEntity>(entity));
     }
 
-    public string GetKey(string id)
+    public string GetKey(Guid id)
     {
         return typeof(UEntity) + "_" + id;
     }

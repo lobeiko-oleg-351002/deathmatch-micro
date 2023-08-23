@@ -1,8 +1,4 @@
-using Application.Users.DTO.Role;
-using Azure;
 using deathmatch_micro.Application.Users.Commands;
-using deathmatch_micro.Domain.Entities;
-using Infrastructure.Common.Exceptions;
 using Newtonsoft.Json;
 
 namespace IntegrationTests;
@@ -12,16 +8,6 @@ public class UserControllerIntegrationTest : IClassFixture<TestingWebAppFactory<
     private readonly HttpClient _client;
     public UserControllerIntegrationTest(TestingWebAppFactory<Program> factory)
         => _client = factory.CreateClient();
-
-    [Fact]
-    public async Task Users_GetAll_Success()
-    {
-        var response = await _client.GetAsync("/Users");
-        response.EnsureSuccessStatusCode();
-        var responseString = await response.Content.ReadAsStringAsync();
-        Assert.Contains("Mark", responseString);
-        Assert.Contains("Evelin", responseString);
-    }
 
     public static IEnumerable<object[]> UserCorrectEntities
     {

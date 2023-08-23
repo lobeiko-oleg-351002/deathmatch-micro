@@ -2,7 +2,7 @@
 
 namespace Application.Users.DTO.Role;
 
-public record ViewRoleDTO : ViewDTO
+public record ViewRoleDTO : ResponseDTO
 {
     public required string Name { get; set; }
 }

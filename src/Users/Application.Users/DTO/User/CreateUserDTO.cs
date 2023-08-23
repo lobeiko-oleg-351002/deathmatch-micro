@@ -3,7 +3,7 @@ using Application.Users.DTO.Role;
 
 namespace Application.Users.DTO.User;
 
-public record CreateUserDTO : CreateDTO
+public record CreateUserDTO : RequestDTO
 {
     public required string Name { get; set; }
 

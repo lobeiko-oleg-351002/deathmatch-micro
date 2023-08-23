@@ -36,7 +36,7 @@ public class UserCommandUnitTest
     [Fact]
     public void RemoveUserCommand_Success()
     {
-        var cmd = new RemoveUserByIdCommand { Id = "" };
+        var cmd = new RemoveUserByIdCommand { Id = new Guid() };
         var handler = new RemoveUserCommandHandler(_mockUserService.Object);
 
         var result = handler.Handle(cmd, new CancellationToken());

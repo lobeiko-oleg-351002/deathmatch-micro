@@ -1,22 +1,15 @@
-﻿using Application.Users.DTO.Role;
-using Application.Users.DTO.User;
-using Application.Users.Interfaces;
-using Application.Users.Validation;
+﻿using Application.Users.Validation;
 using deathmatch_micro.Application.Users.Commands;
 using FluentValidation.TestHelper;
-using Infrastructure.Users.Exceptions;
-using Infrastructure.Users.Services;
 
 namespace UserUnitTests;
 public class UserFluentValidationUnitTest
 {
     private readonly CreateUserCommandValidator _createUserCommandValidator;
-    private readonly RemoveUserByIdCommandValidator _removeUserByIdCommandValidator;
 
     public UserFluentValidationUnitTest()
     {
         _createUserCommandValidator = new CreateUserCommandValidator();
-        _removeUserByIdCommandValidator = new RemoveUserByIdCommandValidator();
     }
 
     public static IEnumerable<object[]> UserEntitiesEmptyOrIncorrectEmail
@@ -114,20 +107,4 @@ public class UserFluentValidationUnitTest
         var response = _createUserCommandValidator.TestValidate(entity);
         response.ShouldNotHaveAnyValidationErrors();
     }
-
-    [Fact]
-    public void RemoveUserCommand_ValidateNewUser_IdIsNullException()
-    {
-        var response = _removeUserByIdCommandValidator.TestValidate(new RemoveUserByIdCommand { Id = null });
-        response.ShouldHaveValidationErrorFor(x => x.Id);
-    }
-
-    [Fact]
-    public void RemoveUserCommand_ValidateNewUser_Success()
-    {
-        var response = _removeUserByIdCommandValidator.TestValidate(new RemoveUserByIdCommand { Id = "13d54b8e-2c1f-4e35-49fb-08db94cbee6d" });
-        response.ShouldNotHaveValidationErrorFor(x => x.Id);
-    }
-
-
 }

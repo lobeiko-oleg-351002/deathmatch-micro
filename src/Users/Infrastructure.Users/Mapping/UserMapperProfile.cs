@@ -12,8 +12,8 @@ public class UserMapperProfile : Profile
     {
         CreateMap<User, ViewUserDTO>();
         CreateMap<CreateUserDTO, User>()
-            .ForMember(entity => entity.Id, dto => dto.MapFrom(x => Guid.Parse(x.Id)))
-            .ForMember(entity => entity.Role, opt => opt.MapFrom(dto => new Role { Name = dto.RoleName }));
-        CreateMap<CreateUserCommand, CreateUserDTO>().ForMember(x => x.Id, opt => opt.Ignore());
+            .ForMember(entity => entity.Role, opt => opt.MapFrom(dto => new Role { Name = dto.RoleName }))
+            .ForMember(entity => entity.Id, opt => opt.Ignore());
+        CreateMap<CreateUserCommand, CreateUserDTO>();
     }
 }

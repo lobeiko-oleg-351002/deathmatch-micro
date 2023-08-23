@@ -2,7 +2,7 @@
 
 namespace Application.Users.DTO.Role;
 
-public record CreateRoleDTO : CreateDTO
+public record CreateRoleDTO : RequestDTO
 {
     public required string Name { get; set; }
 }
