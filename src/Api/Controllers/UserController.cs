@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Application.Controllers;
 
 [ApiController]
-[Route("[controller]/[action]")]
 public class UserController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -18,12 +17,14 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
+    [Route("user")]
     public async Task CreateUser([FromForm] CreateUserCommand cmd)
     {
         await _mediator.Send(cmd);
     }
 
     [HttpDelete]
+    [Route("user")]
     public async Task DeleteUser(RemoveUserByIdCommand cmd)
     {
         await _mediator.Send(cmd);
@@ -31,6 +32,7 @@ public class UserController : ControllerBase
 
     //  [Authorize(Roles = "Admin")]
     [HttpGet]
+    [Route("users")]
     public async Task<IActionResult> GetAll()
     {
         var result = await _mediator.Send(new GetAllUsersQuery());
@@ -38,9 +40,18 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
+    [Route("roles")]
     public async Task<IActionResult> GetAllRoles()
     {
         var result = await _mediator.Send(new GetAllRolesQuery());
+        return Ok(result);
+    }
+
+    [HttpGet]
+    [Route("user/{id}")]
+    public async Task<IActionResult> Get(Guid id)
+    {
+        var result = await _mediator.Send(new GetUserQuery { Id = id });
         return Ok(result);
     }
 }
