@@ -1,7 +1,9 @@
 ﻿using Application.Users.Queries;
 using deathmatch_micro.Application.Users.Commands;
 using deathmatch_micro.Application.Users.Queries;
+using MassTransit;
 using MediatR;
+using MicroserviceEvents;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers;
@@ -10,10 +12,12 @@ namespace Application.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IPublishEndpoint _publishEndpoint;
 
-    public UserController(IMediator mediator)
+    public UserController(IMediator mediator, IPublishEndpoint publishEndpoint)
     {
         _mediator = mediator;
+        _publishEndpoint = publishEndpoint;
     }
 
     [HttpPost]
@@ -21,6 +25,11 @@ public class UserController : ControllerBase
     public async Task CreateUser([FromForm] CreateUserCommand cmd)
     {
         await _mediator.Send(cmd);
+
+        await _publishEndpoint.Publish<UserCreatedEvent>(new
+        {
+            Name = cmd.Name,
+        });
     }
 
     [HttpDelete]

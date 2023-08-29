@@ -5,8 +5,8 @@
     <Nullable>enable</Nullable>
     <Title>DeathmatchQueueEvents</Title>
     <PackageOutputPath>C:\My Local Nuget Source</PackageOutputPath>
-    <FileVersion>1.0.1</FileVersion>
-    <Version>1.0.1</Version>
+    <FileVersion>1.0.2</FileVersion>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

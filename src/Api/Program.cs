@@ -1,6 +1,7 @@
 using Application.Users;
 using Infrastructure.Users;
 using Infrastructure.Common;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,11 @@ services.AddControllers();
 services.RegisterInfrastructureDependencies();
 services.RegisterUserDependencies();
 services.RegisterUserHandlers();
+
+services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq();
+});
 
 
 services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
