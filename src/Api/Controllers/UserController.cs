@@ -1,9 +1,11 @@
-﻿using Application.Users.Queries;
+﻿using Application.AuthorizationTokens;
+using Application.Users.Queries;
 using deathmatch_micro.Application.Users.Commands;
 using deathmatch_micro.Application.Users.Queries;
 using MassTransit;
 using MediatR;
 using MicroserviceEvents;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers;
@@ -39,7 +41,7 @@ public class UserController : ControllerBase
         await _mediator.Send(cmd);
     }
 
-    //  [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     [Route("users")]
     public async Task<IActionResult> GetAll()
@@ -62,5 +64,14 @@ public class UserController : ControllerBase
     {
         var result = await _mediator.Send(new GetUserQuery { Id = id });
         return Ok(result);
+    }
+
+    [HttpPost]
+    [Route("guest")]
+    public async Task<IActionResult> Authentificate(string username, string password)
+    {
+        var user = await _mediator.Send(new AuthenticateQuery { Username = username, Password = password });
+        var userToken = AuthOptions.CreateUserToken(user);
+        return Ok(userToken);
     }
 }
