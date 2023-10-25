@@ -8,7 +8,7 @@ public static class ConfigInfrastructureDependency
     public static IServiceCollection RegisterInfrastructureDependencies(this IServiceCollection services)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Deathmatch;Trusted_Connection=True;MultipleActiveResultSets=true"));
+                options.UseSqlServer("Data Source=localhost,1441;Database=Deathmatch;Persist Security Info=True; User Id=sa; Password=RaynorRaiders44;TrustServerCertificate=True;MultipleActiveResultSets=true; Trusted_Connection=false;"));
 
         return services;
     }
